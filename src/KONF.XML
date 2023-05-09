@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<X8162_Aktivitetsstudio_>
+	<RADER>
+		<RAD>
+			<Rubrik>Mentorsmöte å ä ö</Rubrik>
+			<Startdatum>2023-05-08</Startdatum>
+			<Starttid>8.00</Starttid>
+			<Slutdatum>2023-05-08</Slutdatum>
+			<Sluttid>9.00</Sluttid>
+			<Aktivitetstext></Aktivitetstext>
+			<Kommentar></Kommentar>
+			<Epost></Epost>
+		</RAD>
+
+		<RAD>
+			<Rubrik>Axson Teknik</Rubrik>
+			<Startdatum>2023-05-08</Startdatum>
+			<Starttid>9.00</Starttid>
+			<Slutdatum>2023-05-08</Slutdatum>
+			<Sluttid>10.00</Sluttid>
+			<Aktivitetstext></Aktivitetstext>
+			<Kommentar></Kommentar>
+			<Epost></Epost>
+		</RAD>
+
+		<RAD>
+			<Rubrik>Mentormöte NIPE GUST</Rubrik>
+			<Startdatum>2023-05-08</Startdatum>
+			<Starttid>11.00</Starttid>
+			<Slutdatum>2023-05-08</Slutdatum>
+			<Sluttid>12.00</Sluttid>
+			<Aktivitetstext></Aktivitetstext>
+			<Kommentar></Kommentar>
+			<Epost></Epost>
+		</RAD>
+
+		<RAD>
+			<Rubrik>Fikapaus</Rubrik>
+			<Startdatum>2023-05-08</Startdatum>
+			<Starttid>15.00</Starttid>
+			<Slutdatum>2023-05-08</Slutdatum>
+			<Sluttid>15.30</Sluttid>
+			<Aktivitetstext></Aktivitetstext>
+			<Kommentar></Kommentar>
+			<Epost></Epost>
+		</RAD>
+
+	</RADER>
+</X8162_Aktivitetsstudio_>
