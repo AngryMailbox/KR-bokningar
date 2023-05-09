@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { convertXmlToJson } from './Converter';
+import { convertXmlToJson } from './components/Converter';
 import KONF from './KONF.XML';
 import styles from './styles/App.module.css';
 import Bookings from './components/Bookings';
@@ -7,6 +7,7 @@ import utf8 from 'utf8';
 import Iconv from 'iconv-lite';
 import { Buffer } from 'buffer';
 import Ongoing from './components/Ongoing';
+import RoomDetails from './components/RoomDetails';
 
 function App() {
   const [bookings, setBookings] = useState([]);
@@ -56,6 +57,7 @@ function App() {
         <Bookings bookings={bookings} />
       </div>
       <div className={styles.right}>
+        <RoomDetails active={isActive} />
         <Ongoing bookings={bookings} active={isActive} />
       </div>
     </div>

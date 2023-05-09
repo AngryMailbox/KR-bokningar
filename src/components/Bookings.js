@@ -1,10 +1,10 @@
 import * as React from "react";
 import MeetingCard from './MeetingCard';
+import styles from '../styles/Bookings.module.css';
 
 const Bookings = (props) => {
     return (
         <div className="bookings">
-            {/* Map over the bookings array and render a MeetingCard for each booking */}
             {props.bookings.map((booking) => (
                 <MeetingCard
                     key={booking.Rubrik._}

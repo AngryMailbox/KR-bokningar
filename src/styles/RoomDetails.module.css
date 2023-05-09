@@ -1,0 +1,38 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    margin-top: 1rem;
+}
+
+.title {
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+}
+
+.active {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center !important;
+    margin: 0;
+    align-self: flex-end;
+}
+
+.active > .dot {
+    height: 0.6rem;
+    width: 0.6rem;
+    background-color: #00FF29;
+    border-radius: 100%;
+    display: inline-block;
+    margin: 0;
+    margin-right: 5px;
+}
+
+.active > .text {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
