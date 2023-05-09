@@ -6,12 +6,13 @@ import Bookings from './components/Bookings';
 import utf8 from 'utf8';
 import Iconv from 'iconv-lite';
 import { Buffer } from 'buffer';
-import Clock from 'react-clock';
+import Ongoing from './components/Ongoing';
 
 function App() {
   const [bookings, setBookings] = useState([]);
   const [value, setValue] = useState(new Date());
   let currentTime = value.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
+  const [isActive, setIsActive] = useState(true);
 
 
   useEffect(() => {
@@ -55,8 +56,7 @@ function App() {
         <Bookings bookings={bookings} />
       </div>
       <div className={styles.right}>
-        <h2>Pågående bokning</h2>
-        <h2>Nästa bokning</h2>
+        <Ongoing bookings={bookings} active={isActive} />
       </div>
     </div>
   );
