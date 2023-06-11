@@ -7,6 +7,8 @@ const App = () => {
   let currentTime = clock.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
   let upcomingBookings = [];
 
+
+  //hide status bar
   useEffect(() => {
     StatusBar.setHidden(true, 'none');
   });
@@ -20,7 +22,7 @@ const App = () => {
     }
   }, []);
 
-  if (upcomingBookings) return (
+  if (upcomingBookings.length > 0) return (
     <View className={styles.App}>
       <View className={styles.left}>
         <Text className={styles.clock}>{currentTime}</Text>

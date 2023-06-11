@@ -1,5 +1,5 @@
 //Fetch XML data from the server
-useEffect(() => {
+const getBookings = async () => {
     const fetchXmlData = async () => {
         await fetch('https://bi.krsystem.se/booking/KONF.XML', {
             method: 'GET',
@@ -26,15 +26,7 @@ useEffect(() => {
                 //const xmlDocument = parser.parseFromString(xmlString, 'application/xml')
                 const json = convertXmlToJson(xmlString);
                 const bookings = json?.X8162_Aktivitetsstudio_?.RADER?.RAD;
-                const filteredBookings = bookings.filter(booking => (booking.Rum._ === roomCode)); //rum
-
-                const sortedBookings = filteredBookings.sort((a, b) => dateConvert(a.Starttid._, a.Startdatum._) > dateConvert(b.Starttid._, b.Startdatum._));
-
-                setBookings(sortedBookings);
-
-                const upcomingBookings = sortedBookings.filter(booking => dateConvert(booking.Starttid._, booking.Startdatum._) >= new Date());
-
-                setUpcomingBookings(upcomingBookings);
+                const sortedBookings = bookings.sort((a, b) => dateConvert(a.Starttid._, a.Startdatum._) > dateConvert(b.Starttid._, b.Startdatum._));
 
             })
             .catch(error => {
@@ -43,7 +35,6 @@ useEffect(() => {
             );
 
     };
-    fetchXmlData();
-    const interval = setInterval(fetchXmlData, 20 * 1000); //fetch data every x seconds
-    return () => (clearInterval(interval))
-}, [roomCode]);
+}
+
+export default getBookings;
