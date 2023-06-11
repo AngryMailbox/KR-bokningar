@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, StatusBar } from 'react-native';
+import styles from './styles/App.module.js';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+const App = () => {
+  const [clock, setClock] = useState(new Date());
+  let currentTime = clock.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
+  let upcomingBookings = [];
+
+  useEffect(() => {
+    StatusBar.setHidden(true, 'none');
+  });
+
+
+  useEffect(() => {
+    const interval = setInterval(
+      () => setClock(new Date()), 1000);
+    return () => {
+      clearInterval(interval);
+    }
+  }, []);
+
+  if (upcomingBookings) return (
+    <View className={styles.App}>
+      <View className={styles.left}>
+        <Text className={styles.clock}>{currentTime}</Text>
+        <Text>Kommande bokningar</Text>
+      </View>
+      <View className={styles.right}>
+      </View>
+    </View>
+  )
+  else return (
+    <View className={styles.App}>
+      <Text>Det finns inga kommande bokningar.</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
