@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "##1c1c1c"
     },
     "androidNavigationBar": {
       "visible": "immersive"
@@ -23,7 +23,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#000000"
+        "backgroundColor": "##1c1c1c"
       },
       "package": "com.angrymailbox.bokningar"
     },
