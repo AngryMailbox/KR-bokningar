@@ -1,17 +1,28 @@
 const dateConvert = (tid, datum) => {
+    // Input validation
+    if (typeof tid !== 'string' || typeof datum !== 'string') {
+        throw new Error('Invalid input. tid and datum must be strings.');
+    }
 
-    if (tid === undefined || datum === undefined) return null;
+    // The booking time format is HH.MM
+    let bookingStartTime = tid;
+    let bookingStartDate = datum;
 
-    //the booking time format is HH.MM
-    let bookingStartTime = tid
-    let bookingStartDate = datum
+    // Check for valid time format
+    if (!/^\d{2}\.\d{2}$/.test(bookingStartTime)) {
+        throw new Error('Invalid time format. Expected format: HH.MM');
+    }
 
-    //substring the time to get the hours and minutes
-    if (bookingStartTime.length < 5) bookingStartTime = "0" + bookingStartTime; //append 0 to string if it is less than 5 characters (fix for format H.MM)
-    let bookingStartHours = bookingStartTime.substring(0, 2);
-    let bookingStartMinutes = bookingStartTime.substring(3, 5);
+    // Substring the time to get the hours and minutes
+    let [bookingStartHours, bookingStartMinutes] = bookingStartTime.split('.');
 
-    return new Date(bookingStartDate + "T" + bookingStartHours + ":" + bookingStartMinutes + ":00");
-}
+    // Pad hours and minutes with leading zeros if necessary
+    bookingStartHours = bookingStartHours.padStart(2, '0');
+    bookingStartMinutes = bookingStartMinutes.padStart(2, '0');
+
+    const convertedDate = new Date(`${bookingStartDate}T${bookingStartHours}:${bookingStartMinutes}:00`);
+
+    return convertedDate;
+};
 
 export default dateConvert;

@@ -1,40 +1,37 @@
-//Fetch XML data from the server
+import xmlconverter from "./xmlconverter.js";
+import dateConvert from "./dateconvert.js";
+import convertToUtf8 from "./encoding.js";
+import get from "./getarraybytes.js"
+
+
 const getBookings = async () => {
-    const fetchXmlData = async () => {
-        await fetch('https://bi.krsystem.se/booking/KONF.XML', {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'text/plain',
+    try {
+        let data = await get('https://bi.krsystem.se/booking/KONF.XML');
+
+        // Convert ISO-8859-1 bytes to UTF-8 string
+        const utf8String = convertToUtf8(new Uint8Array(data));
+
+        const jsonObj = xmlconverter(utf8String);
+
+        let bookings = jsonObj?.X8162_Aktivitetsstudio_?.RADER?.RAD;
+        bookings = bookings.sort((a, b) => {
+            const dateA = dateConvert(a.Starttid._, a.Startdatum._);
+            const dateB = dateConvert(b.Starttid._, b.Startdatum._);
+
+            if (dateA < dateB) {
+                return -1;
+            } else if (dateA > dateB) {
+                return 1;
+            } else {
+                return 0;
             }
-        })
-            .then(async response => {
-                const contentType = response.headers.get('content-type');
-                const charsetMatch = contentType.match(/charset=(.*)/);
-                const encoding = charsetMatch ? charsetMatch[1] : 'iso-8859-1';
-                if (!response.ok) alert("Response not ok.\n\n" + response.statusText);
+        });
 
-                const buffer = await response
-                    .arrayBuffer();
-                return ({ buffer, encoding });
-            })
-            .then(({ buffer, encoding }) => {
-                const dataView = new DataView(buffer);
-                const decoder = new TextDecoder(encoding);
-                const xmlString = decoder.decode(dataView);
-                const parser = new DOMParser();
-                //const xmlDocument = parser.parseFromString(xmlString, 'application/xml')
-                const json = convertXmlToJson(xmlString);
-                const bookings = json?.X8162_Aktivitetsstudio_?.RADER?.RAD;
-                const sortedBookings = bookings.sort((a, b) => dateConvert(a.Starttid._, a.Startdatum._) > dateConvert(b.Starttid._, b.Startdatum._));
 
-            })
-            .catch(error => {
-                console.error("Something went wrong.\n\n" + error);
-            }
-            );
-
-    };
-}
+        return bookings;
+    } catch (error) {
+        throw new Error("Something went wrong.\n\n" + error);
+    }
+};
 
 export default getBookings;

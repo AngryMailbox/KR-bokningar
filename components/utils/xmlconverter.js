@@ -1,6 +1,6 @@
 import { parseString } from 'xml2js';
 
-export function convertXmlToJson(xmlString) {
+const xmlconverter = (xmlString) => {
     let jsonObj = {};
     parseString(xmlString, { explicitCharkey: true, explicitArray: false, charset: "ISO-8859-1" }, function (err, result) {
         if (err) {
@@ -11,3 +11,5 @@ export function convertXmlToJson(xmlString) {
     });
     return jsonObj;
 }
+
+export default xmlconverter;

@@ -3,13 +3,16 @@
     "name": "bokningar",
     "slug": "bokningar",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+    },
+    "androidNavigationBar": {
+      "visible": "false"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.angrymailbox.bokningar"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c50dbd5b-f21d-4675-b659-a418177b6644"
+      }
     }
   }
 }
