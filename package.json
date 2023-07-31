@@ -18,6 +18,7 @@
     "expo-screen-orientation": "~5.1.1",
     "expo-secure-store": "~12.1.1",
     "expo-status-bar": "~1.4.4",
+    "expo-updates": "~0.16.4",
     "fastestsmallesttextencoderdecoder": "^1.0.22",
     "iconv-lite": "^0.6.3",
     "react": "18.2.0",
