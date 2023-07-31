@@ -46,7 +46,7 @@ npm install
 expo start
 ```
 
-Detta öppnar Expo Developer Tools i din webbläsare. Här kan du välja att köra appen på en emulator eller skanna QR-koden med Expo Go-appen på din mobila enhet för att köra appen där.
+Här kan du välja att köra appen på en emulator eller skanna QR-koden med Expo Go-appen på din mobila enhet för att köra appen där.
 
 Observera att du behöver ha Expo Go-appen installerad på din mobil för att kunna köra appen på den.
 
