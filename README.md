@@ -1,6 +1,6 @@
 # KR-bokningar Expo App
 
-KR-bokningar är en Expo-baserad mobilapp som låter användare boka mötesrum på kontoret genom import av XML-filer från Pyramid. Denna app bygger på React Native och Expo-plattformen för att skapa en användarvänlig och effektiv upplevelse för bokningar av mötesrum.
+KR-bokningar är en Expo-baserad mobilapp som låter användare boka mötesrum på kontoret genom import av XML-filer från Pyramid. Denna app bygger på React Native och Expo-plattformen.
 
 ## Funktioner
 
