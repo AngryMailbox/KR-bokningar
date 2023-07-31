@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "bokningar",
-    "slug": "bokningar",
+    "name": "KR-bokningar",
+    "slug": "KR-bokningar",
     "version": "1.0.1",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
