@@ -8,6 +8,7 @@ import { filterBookings, isOngoing } from '../components/utils/filterbookings.js
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useRoomData } from '../components/utils/roomDataProvider.js'; // Import useData hook
+import { useKeepAwake } from 'expo-keep-awake';
 
 const Main = () => {
     useKeepAwake();

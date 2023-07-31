@@ -8,10 +8,7 @@ const dateConvert = (tid, datum) => {
     let bookingStartTime = tid;
     let bookingStartDate = datum;
 
-    // Check for valid time format
-    if (!/^\d{2}\.\d{2}$/.test(bookingStartTime)) {
-        throw new Error('Invalid time format. Expected format: HH.MM');
-    }
+
 
     // Substring the time to get the hours and minutes
     let [bookingStartHours, bookingStartMinutes] = bookingStartTime.split('.');

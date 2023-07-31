@@ -5,6 +5,7 @@ import styles from '../styles/Settings.module.js';
 import { TextInput, Banner, Button } from 'react-native-paper';
 import { Image } from 'react-native';
 import { useRoomData } from '../components/utils/roomDataProvider.js';
+import { useKeepAwake } from 'expo-keep-awake';
 
 
 const Settings = () => {
