@@ -1,7 +1,7 @@
 const dateConvert = (tid, datum) => {
     // Input validation
     if (typeof tid !== 'string' || typeof datum !== 'string') {
-        throw new Error('Invalid input. tid and datum must be strings.');
+        alert('Invalid input. Time and date must be of type string.');
     }
 
     // The booking time format is HH.MM
