@@ -13,13 +13,45 @@ import { useRoomData } from '../components/utils/roomDataProvider.js';
 import { useKeepAwake, activateKeepAwakeAsync } from 'expo-keep-awake';
 import UserInactivity from 'react-native-user-inactivity';
 import { WebView } from 'react-native-webview';
+import * as NavigationBar from 'expo-navigation-bar';
+
 
 import AllBookings from '../components/allbookings.js';
 
 
 const Home = () => {
-    useKeepAwake();
-    activateKeepAwakeAsync();
+    const [keepAwake, setKeepAwake] = useState(); // State for the keep awake button
+    const [barVisibility, setBarVisibility] = useState();
+
+
+
+    useEffect(() => {
+        const enableKeepAwake = async () => {
+            await activateKeepAwakeAsync();
+        }
+        enableKeepAwake();
+
+    }, []);
+
+
+    NavigationBar.addVisibilityListener(({ visibility }) => {
+        if (visibility === "visible") {
+            setBarVisibility(visibility);
+        }
+    });
+    useEffect(() => {
+        navigationConfig();
+    }, [barVisibility]);
+
+    const navigationConfig = async () => {
+        // Just incase it is not hidden
+        NavigationBar.setBackgroundColorAsync('red');
+
+        // Hide it
+        NavigationBar.setVisibilityAsync("hidden");
+    };
+
+
     const navigation = useNavigation();
 
     const [clock, setClock] = useState(new Date());
@@ -76,11 +108,11 @@ const Home = () => {
         fetchBookings();
         const interval = setInterval(() => {
             fetchBookings();
-        }, (options?.serverSyncTime * 1000) || 2000);
+        }, ((options?.serverSyncTime * 1000) || 2000));
         return () => {
             clearInterval(interval);
         };
-    }, [roomCode]); //TODO: Why the hell does this work? It should not work, but it does lol.
+    }, [roomCode, options?.serverSyncTime]); //TODO: Why the hell does this work? It should not work, but it does lol.
 
     useEffect(
         () => {
@@ -113,11 +145,12 @@ const Home = () => {
         fetchRandomImage();
         const interval = setInterval(() => {
             fetchRandomImage();
-        }, (options?.slideShowTime * 1000) || 30000);
+            console.log("Fetching new image");
+        }, ((options?.slideShowTime) * 1000 || 30000));
 
         // Clear the interval when the component is unmounted, looks goofy haha
         return () => clearInterval(interval);
-    }, []);
+    }, [options?.slideShowTime]);
 
     const fetchRandomImage = () => {
         const randomImageWidth = Math.floor(Math.random() * 100) + 1900;
