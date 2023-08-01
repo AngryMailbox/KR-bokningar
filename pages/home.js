@@ -17,6 +17,7 @@ import * as NavigationBar from 'expo-navigation-bar';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 
+
 import AllBookings from '../components/allbookings.js';
 
 
@@ -31,26 +32,24 @@ const Home = () => {
             await activateKeepAwakeAsync();
         }
         enableKeepAwake();
-        SystemNavigationBar.navigationHide();
-    }, []);
 
+        const disableNavigationBar = async () => {
+            let res = [];
+            try {
+                res[0] = await SystemNavigationBar.navigationHide();
+                res[1] = await SystemNavigationBar.fullScreen();
+                res[2] = await SystemNavigationBar.stickyImmersive();
 
-    NavigationBar.addVisibilityListener(({ visibility }) => {
-        if (visibility === "visible") {
-            setBarVisibility("hidden");
+                res[3] = await NavigationBar.setPositionAsync("absolute");
+                res[4] = await NavigationBar.setHiddenAsync(true);
+                res[5] = await NavigationBar.setVisibilityAsync("hidden");
+            }
+            catch (error) {
+                console.log("possible error: " + res.toString());
+            }
         }
-    });
-    useEffect(() => {
-        navigationConfig();
-    }, [barVisibility]);
-
-    const navigationConfig = async () => {
-        // Just incase it is not hidden
-        NavigationBar.setBackgroundColorAsync('red');
-
-        // Hide it
-        NavigationBar.setVisibilityAsync("hidden");
-    };
+        disableNavigationBar();
+    }, []);
 
 
     const navigation = useNavigation();
