@@ -7,6 +7,7 @@ import Settings from './pages/settings.js';
 import { RoomDataProvider } from './components/utils/roomDataProvider.js';
 import { OptionsDataProvider } from './components/utils/optionsDataProvider.js';
 import { useKeepAwake, activateKeepAwakeAsync } from 'expo-keep-awake';
+import * as NavigationBar from 'expo-navigation-bar';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,18 @@ const App = () => {
 
   activateKeepAwakeAsync();
   useKeepAwake();
+
+  const [navBarHidden, setNavBarHidden] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = NavigationBar.addVisibilityListener((event) => {
+      setNavBarHidden(event.visible);
+    });
+    return () => {
+      unsubscribe.remove();
+    };
+  }
+  );
 
   return (
     <RoomDataProvider>

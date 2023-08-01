@@ -44,6 +44,8 @@
       "policy": "sdkVersion"
     },
     "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
       "url": "https://u.expo.dev/c50dbd5b-f21d-4675-b659-a418177b6644"
     }
   }
