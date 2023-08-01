@@ -22,16 +22,5 @@
   },
   "submit": {
     "production": {}
-  },
-  "plugins": [
-    [
-      "expo-navigation-bar",
-      {
-        "position": "absolute",
-        "visibility": "hidden",
-        "behavior": "inset-swipe",
-        "backgroundColor": "#00000000"
-      }
-    ]
-  ]
+  }
 }

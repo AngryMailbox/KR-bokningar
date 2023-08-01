@@ -47,6 +47,17 @@
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
       "url": "https://u.expo.dev/c50dbd5b-f21d-4675-b659-a418177b6644"
-    }
+    },
+    "plugins": [
+      [
+        "expo-navigation-bar",
+        {
+          "position": "absolute",
+          "visibility": "hidden",
+          "behavior": "inset-swipe",
+          "backgroundColor": "#00000000"
+        }
+      ]
+    ]
   }
 }
