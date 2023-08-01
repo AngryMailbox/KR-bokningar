@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList } from 'react-native';
-import { Card, Chip } from 'react-native-paper';
+import { Card, Chip, Divider } from 'react-native-paper';
 import styles from '../styles/Main.module.js';
 
 const AllBookings = ({ otherBookings, time }) => {
@@ -15,18 +15,19 @@ const AllBookings = ({ otherBookings, time }) => {
             {/* Upcoming bookings list */}
             <View style={styles.gridContainer}>
                 {/* Here, we use FlatList to render a grid of cards */}
-                <Text style={styles.title}>Andra bokningar:</Text>
+                <Text style={styles.titleother}>Andra bokningar:</Text>
                 <FlatList
                     data={otherBookings}
                     keyExtractor={(item) => item.Aktivitetsnr._}
                     numColumns={2} // Change this to the desired number of columns in the grid
                     renderItem={({ item }) => (
-                        <Card style={styles.gridCard} key={item.Aktivitetsnr._}>
+                        <Card mode={'contained'} style={styles.gridCard} key={item.Aktivitetsnr._}>
                             <Card.Content>
-                                <Text style={styles.bigtitle}>{item.Rubrik._}</Text>
-                                <Text style={styles.text}>{item.Startdatum._}</Text>
-                                <Text style={styles.text}>{item.Starttid._ + " - " + item.Sluttid._}</Text>
-                                <Chip style={styles.text}>{item.Rumsnamn._}</Chip >
+                                <Text style={styles.title}>{item.Rubrik._}</Text>
+                                <Divider />
+                                <Text style={styles.smalltext}>{item.Startdatum._}</Text>
+                                <Text style={styles.smalltext}>{item.Starttid._ + " - " + item.Sluttid._}</Text>
+                                <Chip mode={'outlined'} style={styles.chip}>{item.Rumsnamn._}</Chip >
                             </Card.Content>
                         </Card>
                     )}

@@ -24,6 +24,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
 
+    titleother: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: 5,
+        color: '#ffffff',
+        alignSelf: 'center',
+    },
+
     wrapperLeft: {
         display: 'flex',
         flexDirection: 'column',
@@ -32,6 +40,7 @@ const styles = StyleSheet.create({
         width: '20%',
         padding: 20,
         backgroundColor: 'rgba(40, 40, 40, 0.6)',
+        height: '100%',
     },
 
     clock: {
@@ -86,6 +95,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 5,
         color: '#ffffff',
+
     },
 
 
@@ -163,14 +173,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 16,
+        marginTop: 10,
     },
 
     gridCard: {
-        width: 300,
+        width: 350,
         margin: 8,
         padding: 16,
-        borderRadius: 8,
-        backgroundColor: '#fff', // Change the card background color as needed
+        borderRadius: 0,
+        backgroundColor: '#rgba(255, 255, 255, 0.2)', // Change the card background color as needed
         elevation: 4, // For Android elevation (shadow), adjust as needed
     },
 
@@ -188,6 +199,11 @@ const styles = StyleSheet.create({
         color: '#000', // Change the text color as needed
     },
 
+    chip: {
+        backgroundColor: 'rgba(1, 55, 150, 0.5)', // Change the chip background color as needed
+        borderRadius: 0,
+    },
+
     text: {
         fontSize: 15,
         color: '#666', // Change the text color as needed
@@ -200,6 +216,11 @@ const styles = StyleSheet.create({
     description: {
         fontSize: 14,
         color: '#666', // Change the text color as needed
+    },
+
+    smalltext: {
+        fontSize: 14,
+        color: '#fff', // Change the text color as needed
     },
 });
 
