@@ -5,12 +5,13 @@ import styles from '../styles/Settings.module.js';
 import { TextInput, Banner, Button, Snackbar, Divider } from 'react-native-paper';
 import { Image } from 'react-native';
 import { useRoomData } from '../components/utils/roomDataProvider.js';
-import { useKeepAwake } from 'expo-keep-awake';
+import { useKeepAwake, activateKeepAwakeAsync } from 'expo-keep-awake';
 import { useOptionsData } from '../components/utils/optionsDataProvider.js';
 
 
 const Settings = () => {
     useKeepAwake();
+    activateKeepAwakeAsync();
 
 
     const [visible, setVisible] = React.useState(false);

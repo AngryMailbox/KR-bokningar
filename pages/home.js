@@ -10,7 +10,7 @@ import { filterBookings, isOngoing } from '../components/utils/filterbookings.js
 
 import { useOptionsData } from '../components/utils/optionsDataProvider.js';
 import { useRoomData } from '../components/utils/roomDataProvider.js';
-import { useKeepAwake } from 'expo-keep-awake';
+import { useKeepAwake, activateKeepAwakeAsync } from 'expo-keep-awake';
 import UserInactivity from 'react-native-user-inactivity';
 import { WebView } from 'react-native-webview';
 
@@ -19,6 +19,7 @@ import AllBookings from '../components/allbookings.js';
 
 const Home = () => {
     useKeepAwake();
+    activateKeepAwakeAsync();
     const navigation = useNavigation();
 
     const [clock, setClock] = useState(new Date());

@@ -6,7 +6,7 @@ import Home from './pages/home.js';
 import Settings from './pages/settings.js';
 import { RoomDataProvider } from './components/utils/roomDataProvider.js';
 import { OptionsDataProvider } from './components/utils/optionsDataProvider.js';
-import { useKeepAwake } from 'expo-keep-awake';
+import { useKeepAwake, activateKeepAwakeAsync } from 'expo-keep-awake';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +16,7 @@ const Stack = createStackNavigator();
 
 const App = () => {
 
+  activateKeepAwakeAsync();
   useKeepAwake();
 
   return (
