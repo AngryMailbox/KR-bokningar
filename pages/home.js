@@ -14,6 +14,7 @@ import { useKeepAwake, activateKeepAwakeAsync } from 'expo-keep-awake';
 import UserInactivity from 'react-native-user-inactivity';
 import { WebView } from 'react-native-webview';
 import * as NavigationBar from 'expo-navigation-bar';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 
 import AllBookings from '../components/allbookings.js';
@@ -30,13 +31,13 @@ const Home = () => {
             await activateKeepAwakeAsync();
         }
         enableKeepAwake();
-
+        SystemNavigationBar.navigationHide();
     }, []);
 
 
     NavigationBar.addVisibilityListener(({ visibility }) => {
         if (visibility === "visible") {
-            setBarVisibility(visibility);
+            setBarVisibility("hidden");
         }
     });
     useEffect(() => {
