@@ -1,15 +1,15 @@
 {
   "expo": {
     "name": "KR-bokningar",
-    "slug": "KR-bokningar",
-    "version": "1.0.1",
+    "slug": "bokningar",
+    "version": "1.0.0",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "##1c1c1c"
+      "backgroundColor": "#1c1c1c"
     },
     "androidNavigationBar": {
       "visible": "immersive"
@@ -23,7 +23,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "##1c1c1c"
+        "backgroundColor": "#1c1c1c"
       },
       "package": "com.angrymailbox.bokningar"
     },

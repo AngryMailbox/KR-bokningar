@@ -32,9 +32,7 @@ export function RoomDataProvider({ children }) {
             // Save room data to SecureStore
             await SecureStore.setItemAsync('roomName', newRoomName);
             await SecureStore.setItemAsync('roomCode', newRoomCode);
-            console.log('Room data saved successfully!');
-            console.log('Room name:', newRoomName);
-            console.log('Room code:', newRoomCode);
+            console.log('Room data saved successfully! ' + 'Room name:', newRoomName, 'Room code:', newRoomCode);
             setRoomName(newRoomName); // Update the state with the new room name
             setRoomCode(newRoomCode); // Update the state with the new room code
         } catch (error) {

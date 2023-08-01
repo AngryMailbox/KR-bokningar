@@ -31,12 +31,15 @@
     "react-native-screens": "~3.20.0",
     "react-native-shadow": "^1.2.2",
     "react-native-svg": "13.4.0",
+    "react-native-user-inactivity": "^1.2.0",
     "react-native-vector-icons": "^10.0.0",
     "react-native-web": "~0.18.10",
+    "react-native-webview": "11.26.0",
     "stream": "^0.0.2",
     "text-encoding-utf-8": "^1.0.2",
     "timers": "^0.1.1",
-    "xml2js": "^0.6.2"
+    "xml2js": "^0.6.2",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

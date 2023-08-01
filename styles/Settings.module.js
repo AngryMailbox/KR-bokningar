@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
     },
     settingsTitle: {
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: 'bold',
         marginBottom: 20,
     },
@@ -16,12 +16,19 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     settingsLabel: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
     },
     settingsValue: {
         fontSize: 16,
+        marginBottom: 10,
     },
-});
+
+    divider: {
+        marginTop: 20,
+        marginBottom: 20,
+    }
+}
+);
 
 export default styles;

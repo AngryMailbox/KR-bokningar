@@ -1,33 +1,50 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-    background: {
+
+    backgroundImage: {
         flex: 1,
         resizeMode: 'cover',
-        justifyContent: 'center',
+    },
+
+
+    background: {
+        flex: 1,
+        display: 'flex',
+        resizeMode: 'cover',
+        backgroundColor: 'rgba(50, 50, 50, 0.9)',
     },
 
     parent: {
-        flex: 1,
+        height: '100%',
+        width: '100%',
+        display: 'flex',
         flexDirection: 'row',
-        paddingHorizontal: 10,
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
 
     wrapperLeft: {
-        flex: 1,
+        display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         justifyContent: 'space-evenly',
+        width: '20%',
+        padding: 20,
+        backgroundColor: 'rgba(40, 40, 40, 0.6)',
     },
 
     clock: {
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontSize: 60,
         color: '#ffffff',
+        padding: 20,
     },
 
-    upcomingBookingsSection: {
-        flex: 1, //TODO: Adjust this to change the size of the upcoming bookings section. Style fix later.
+    upcomingSection: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
     },
 
     upcomingBookingsText: {
@@ -41,38 +58,42 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
 
+
     card: {
         width: '100%',
-        height: 120,
-        marginVertical: 10,
-        padding: 10,
+        height: 'auto',
+        marginVertical: 0,
+        padding: 0,
         borderRadius: 8,
-        elevation: 4,
-        backgroundColor: '#ffffff',
+        backgroundColor: 'transparent',
     },
 
-    cover: {
+    cardcover: {
+        marginTop: 0,
+        padding: 0,
         height: 'auto',
-        borderRadius: 8,
+        borderRadius: 0,
+    },
+
+    bigtitle: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        marginBottom: 5,
     },
 
     title: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 5,
-    },
-
-    date: {
-        fontSize: 15,
-    },
-
-    time: {
-        fontSize: 15,
+        color: '#ffffff',
     },
 
 
-    wrapper: {
-        flex: 1,
+    wrapperRight: {
+        alignSelf: 'flex-end',
+        display: 'flex',
+        alignItems: 'flex-start',
+        width: '50%',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
     },
@@ -80,10 +101,12 @@ const styles = StyleSheet.create({
     roomDetails: {
         display: 'flex',
         flexDirection: 'column',
+        position: 'absolute',
+        marginTop: 20,
     },
 
     roomName: {
-        fontSize: 25,
+        fontSize: 50,
         fontWeight: 'bold',
         color: '#ffffff',
     },
@@ -105,28 +128,78 @@ const styles = StyleSheet.create({
         color: '#ffffff',
     },
 
-
     nextBookingSection: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
 
-    nextBookingCard: {
+    cardwrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 16,
+    },
+
+    bigcard: {
         width: 500,
         height: 300,
         padding: 10,
         borderRadius: 8,
         elevation: 4,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#rgba(255, 245, 245, 0.9)',
     },
 
     settings: {
         position: 'absolute',
         width: 20,
         height: 20,
-        bottom: 10,
-        right: 10,
+        bottom: 5,
+        right: 5,
+    },
+
+    gridContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 16,
+    },
+
+    gridCard: {
+        width: 300,
+        margin: 8,
+        padding: 16,
+        borderRadius: 8,
+        backgroundColor: '#fff', // Change the card background color as needed
+        elevation: 4, // For Android elevation (shadow), adjust as needed
+    },
+
+    whitetitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 8,
+        color: '#fff', // Change the text color as needed
+    },
+
+    blacktitle: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        marginBottom: 8,
+        color: '#000', // Change the text color as needed
+    },
+
+    text: {
+        fontSize: 15,
+        color: '#666', // Change the text color as needed
+    },
+
+    time: {
+        fontSize: 15,
+        color: '#666', // Change the text color as needed
+    },
+    description: {
+        fontSize: 14,
+        color: '#666', // Change the text color as needed
     },
 });
 

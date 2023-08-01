@@ -1,7 +1,6 @@
 import dateConvert from "./dateconvert.js";
 
 export const filterBookings = (bookings, roomCode) => {
-    console.log(roomCode);
     const currentDate = new Date();
 
     // Filter out bookings where the end time (sluttid) has passed and have the same "Rumkod" as "roomCode"
