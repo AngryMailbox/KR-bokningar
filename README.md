@@ -4,11 +4,9 @@ KR-bokningar är en Expo-baserad mobilapp som låter användare boka mötesrum p
 
 ## Funktioner
 
-- **Importera mötesrum från XML**: Användare kan enkelt importera mötesrumsinformation från XML-filer som genereras av Pyramid-systemet på kontoret.
+- **Importera möten från XML**: Användare kan enkelt importera mötesinformation från XML-filer som genereras av Pyramid på kontoret.
 
-- **Visa mötesrum**: Appen visar en lista över tillgängliga mötesrum med detaljer som namn, kapacitet och utrustning.
-
-- **Visa och hantera bokningar**: Alla bokningar för användaren visas i en översiktlig kalender och användare kan även redigera eller avboka sina bokningar.
+- **Visa och hantera bokningar**: Bokningar visas antingen i en översikt eller för det specifierade rummet.
 
 ## Installation
 
