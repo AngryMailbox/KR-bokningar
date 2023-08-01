@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     },
 
     chip: {
-        backgroundColor: 'rgba(1, 55, 150, 0.5)', // Change the chip background color as needed
+        backgroundColor: 'rgba(255, 255, 255, 0.3)', // Change the chip background color as needed
         borderRadius: 0,
     },
 
