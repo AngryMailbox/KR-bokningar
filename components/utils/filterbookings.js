@@ -7,7 +7,6 @@ import dateConvert from "./dateconvert.js";
  * @returns {Array} Array of bookings that have the same "Rumkod" as "roomCode"
  */
 export const filterBookings = (bookings, roomCode) => {
-    console.log("Filtering bookings that have", roomCode);
     const currentDate = new Date();
 
     // Filter out bookings where the end time (sluttid) has passed and have the same "Rumkod" as "roomCode"
@@ -24,13 +23,20 @@ export const isOngoing = (bookings) => {
     }
 
     const booking = bookings[0];
-    console.log("Checking if booking is ongoing:", booking);
+
     const currentDate = new Date();
 
     const startTime = new Date(dateConvert(booking.Starttid._, booking.Startdatum._));
     const endTime = new Date(dateConvert(booking.Sluttid._, booking.Startdatum._));
 
-    console.log("Start time:", startTime);
-    console.log("End time:", endTime);
+    return startTime < currentDate && endTime > currentDate;
+};
+
+export const isOngoingBooking = (booking) => {
+    const currentDate = new Date();
+
+    const startTime = new Date(dateConvert(booking.Starttid._, booking.Startdatum._));
+    const endTime = new Date(dateConvert(booking.Sluttid._, booking.Startdatum._));
+
     return startTime < currentDate && endTime > currentDate;
 };

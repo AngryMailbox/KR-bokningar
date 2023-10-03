@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/Main.module.js';
 import getBookings, { getBookingDay } from '../components/utils/getbookings.js';
 
-import { Card, Text, Button, Chip, Divider } from 'react-native-paper';
+import { Card, Text, Button, Chip, Divider, ProgressBar } from 'react-native-paper';
 import { filterBookings, isOngoing } from '../components/utils/filterbookings.js';
 
 import { useOptionsData } from '../components/utils/optionsDataProvider.js';
@@ -17,11 +17,13 @@ import * as NavigationBar from 'expo-navigation-bar';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import BigCard from '../components/BigCard.js';
 import { AutoSizeText, ResizeTextMode } from 'react-native-auto-size-text';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 
 
 import AllBookings from '../components/allbookings.js';
 import { getAllBookings } from '../components/utils/getAllBookings.js';
+import dateConvert from '../components/utils/dateconvert.js';
 
 
 const Home = () => {
@@ -43,9 +45,6 @@ const Home = () => {
     const [clock, setClock] = useState(new Date());
     let [upcomingBookings, setUpcomingBookings] = useState([]);
     let [otherBookings, setOtherBookings] = useState([]); // Bookings that are in other rooms
-
-    const ongoingImage = require('../assets/ongoingImage.png');
-    const nonOngoingImage = require('../assets/nonOngoingImage.png');
     const [active, setActive] = useState(true);
 
     let [isOngoingBooking, setIsOngoingBooking] = useState();
@@ -123,12 +122,9 @@ const Home = () => {
         try {
             // Fetch the bookings data
             const bookings = await getBookings();
-            console.log("Fetched bookings:", bookings.length);
 
             // Filter the bookings (remove past bookings)
             const filteredBookings = await filterBookings(bookings, roomCode);
-            console.log("Filtered bookings:", filteredBookings.length);
-
 
             setUpcomingBookings(filteredBookings);
             setOtherBookings(getAllBookings(bookings));
@@ -142,20 +138,33 @@ const Home = () => {
         }
     };
 
+    const elapsedTime = (startTime, startDate) => {
+        const start = new Date(dateConvert(startTime, startDate));
+        const end = new Date();
+        const elapsed = end - start;
+        return elapsed;
+    };
+
+    const elapsedTimePercentage = (startTime, startDate, endTime, endDate) => {
+        const start = new Date(dateConvert(startTime, startDate));
+        const end = new Date(dateConvert(endTime, endDate));
+        const current = new Date();
+        const elapsed = current - start;
+        const total = end - start;
+        return elapsed / total;
+    };
+
 
     const [imageSource, setImageSource] = useState(null);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     useEffect(() => {
-        // Fetch and set the initial random image
         setIsOngoingBooking(isOngoing(upcomingBookings));
         fetchRandomImage();
         const interval = setInterval(() => {
             fetchRandomImage();
             console.log("Fetching new image");
         }, ((options?.slideShowTime) * 1000 || 30000));
-
-        // Clear the interval when the component is unmounted, looks goofy haha
         return () => clearInterval(interval);
     }, [options?.slideShowTime]);
 
@@ -178,7 +187,6 @@ const Home = () => {
 
     nextBooking = upcomingBookings[0];
     isOngoingBooking = isOngoing(upcomingBookings);
-    console.log("Is ongoing booking:", isOngoingBooking);
     return (
         <ImageBackground
             source={{ uri: imageSource }}
@@ -219,14 +227,7 @@ const Home = () => {
                                 {/* Clock section */}
                                 <View style={styles.wrapperLeft}>
                                     <Text style={styles.clock}>{clock.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })}</Text>
-                                    <Text style={styles.title}>Kommande bokningar</Text>
-                                    <Divider style={{
-                                        backgroundColor: 'white',
-                                        height: 1,
-                                        width: 200,
-                                        margin: 0,
-                                        marginBottom: 10,
-                                    }} />
+
                                     <ScrollView style={styles.upcomingSection}>
                                         {upcomingBookings.slice(1).map((booking, index) => {
                                             // Get the current booking's date
@@ -238,10 +239,14 @@ const Home = () => {
 
                                             return (
                                                 <View style={styles.cardwrapper} key={booking.Aktivitetsnr._}>
-                                                    {shouldRenderDate && <Text style={styles.text}>{currentBookingDate}</Text>}
+                                                    {shouldRenderDate && <Text style={styles.bigcardtext}>{currentBookingDate}</Text>}
                                                     <Card mode={'contained'} style={styles.card}>
                                                         <Card.Content>
-                                                            <Text style={styles.title}>{booking.Rubrik?._}</Text>
+                                                            <AutoSizeText
+                                                                numberOfLines={2}
+                                                                fontSizePresets={[20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]}
+                                                                mode={ResizeTextMode.preset_font_sizes}
+                                                                style={styles.title}>{booking.Rubrik?._}</AutoSizeText>
                                                             <Text style={styles.time}>
                                                                 {booking.Starttid?._ + " – " + booking.Sluttid?._}
                                                             </Text>
@@ -276,13 +281,17 @@ const Home = () => {
                                         <Card style={styles.bigcard} key={nextBooking.Aktivitetsnr._}>
                                             {(isOngoingBooking) && <Card.Cover style={styles.bigcardred}></Card.Cover>}
                                             {(!isOngoingBooking) && <Card.Cover style={styles.bigcardgreen}></Card.Cover>}
-                                            <Card.Content >
+                                            <Card.Content>
                                                 <Text style={styles.bigcardtitle}>{nextBooking.Rubrik._}</Text>
                                                 <Text style={styles.bigcardtext}>{getBookingDay(nextBooking)}</Text>
                                                 <Text style={styles.bigcardtimetext}>{nextBooking.Starttid?._ + " – " + nextBooking.Sluttid._}</Text>
                                                 <Text style={styles.bigcardcommenttext}>{nextBooking.Kommentar?._}</Text>
                                             </Card.Content>
                                         </Card>
+                                        <View style={isOngoingBooking ? (styles.progress) : ({ display: "none" })}>
+                                            <ProgressBar style={styles.progressbar} progress={elapsedTimePercentage(nextBooking.Starttid._, nextBooking.Startdatum._, nextBooking.Sluttid._, nextBooking.Slutdatum._)} color={'red'} />
+                                            <Text style={styles.progresstext}>{Math.floor(elapsedTime(nextBooking.Starttid._, nextBooking.Startdatum._) / (1000 * 60).toPrecision(1))} min sedan</Text>
+                                        </View>
                                     </View>
                                 </View>
                             </View>
