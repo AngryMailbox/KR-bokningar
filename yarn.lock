@@ -1976,7 +1976,7 @@
 
 "@testing-library/react-native@^7.2.0":
   version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/react-native/-/react-native-7.2.0.tgz#e5ec5b0974e4e5f525f8057563417d1e9f820d96"
+  resolved "https://registry.npmjs.org/@testing-library/react-native/-/react-native-7.2.0.tgz"
   integrity sha512-rDKzJjAAeGgyoJT0gFQiMsIL09chdWcwZyYx6WZHMgm2c5NDqY52hUuyTkzhqddMYWmSRklFphSg7B2HX+246Q==
   dependencies:
     pretty-format "^26.0.1"
@@ -4239,7 +4239,7 @@ expo-modules-core@1.2.7:
 
 expo-navigation-bar@~2.1.1:
   version "2.1.1"
-  resolved "https://registry.yarnpkg.com/expo-navigation-bar/-/expo-navigation-bar-2.1.1.tgz#ebd4cb1179b21caadc95a2aec7953a1a6fc5af60"
+  resolved "https://registry.npmjs.org/expo-navigation-bar/-/expo-navigation-bar-2.1.1.tgz"
   integrity sha512-UXTfK5Uv65qCFEro9XJY1gxViaqKFB4996OkC3HChGeitGWolCtd7VzVBYKDyfn4EqryDMedrNIqYNWLEFjIZw==
   dependencies:
     "@react-native/normalize-color" "^2.0.0"
@@ -4682,9 +4682,9 @@ fs.realpath@^1.0.0:
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
 
 fsevents@^2.3.2, fsevents@~2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
-  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
+  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
 function-bind@^1.1.1:
   version "1.1.1"
@@ -7444,7 +7444,7 @@ react-is@^18.0.0:
 
 react-native-auto-size-text@^1.1.1:
   version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-auto-size-text/-/react-native-auto-size-text-1.1.1.tgz#5b209d4805f7eb61505a73665366349025d1a217"
+  resolved "https://registry.npmjs.org/react-native-auto-size-text/-/react-native-auto-size-text-1.1.1.tgz"
   integrity sha512-pau8hu3HV6ulJZc2Ez6QUCUxv9mGO7bozOpYwyPR3AclzUB8BjZFSXzBrfHuzTFbqwmcmHxSsow7rOBy3kGhZg==
   dependencies:
     "@testing-library/react-native" "^7.2.0"
@@ -7458,11 +7458,6 @@ react-native-codegen@^0.71.5:
     flow-parser "^0.185.0"
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
-
-react-native-countdown-circle-timer@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-countdown-circle-timer/-/react-native-countdown-circle-timer-3.2.1.tgz#077548e943fcf24b47c7e5ce2f12c1dfa35833c2"
-  integrity sha512-iHiOgipG0hMprerswqUCUfjGo9hL0UhKNS0BGh4o6yY9Lu7f3VXQ7EJt757Obwn74AiF5MOHURIdqldoGnVrDw==
 
 react-native-gesture-handler@~2.9.0:
   version "2.9.0"
@@ -7525,7 +7520,7 @@ react-native-svg@13.4.0:
 
 react-native-system-navigation-bar@^2.6.1:
   version "2.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-system-navigation-bar/-/react-native-system-navigation-bar-2.6.1.tgz#cead40f7311fe92be4921808901b7b56e9c763d8"
+  resolved "https://registry.npmjs.org/react-native-system-navigation-bar/-/react-native-system-navigation-bar-2.6.1.tgz"
   integrity sha512-IN5n55sEbA4oAvwUqK8oCfKKc4fXJmBzcqC/Eq8bv26gTwzk6oUiPrHtzJCSJvWyCOCt6jKuc9vDWEFTLDOLog==
 
 react-native-user-inactivity@^1.2.0:
