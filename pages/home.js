@@ -3,7 +3,7 @@ import { View, StatusBar, ImageBackground, Image, BackHandler, Alert, ScrollView
 import { useNavigation } from '@react-navigation/native';
 
 import styles from '../styles/Main.module.js';
-import getBookings from '../components/utils/getbookings.js';
+import getBookings, { getBookingDay } from '../components/utils/getbookings.js';
 
 import { Card, Text, Button, Chip, Divider } from 'react-native-paper';
 import { filterBookings, isOngoing } from '../components/utils/filterbookings.js';
@@ -15,10 +15,13 @@ import UserInactivity from 'react-native-user-inactivity';
 import { WebView } from 'react-native-webview';
 import * as NavigationBar from 'expo-navigation-bar';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
+import BigCard from '../components/BigCard.js';
+import { AutoSizeText, ResizeTextMode } from 'react-native-auto-size-text';
 
 
 
 import AllBookings from '../components/allbookings.js';
+import { getAllBookings } from '../components/utils/getAllBookings.js';
 
 
 const Home = () => {
@@ -32,43 +35,25 @@ const Home = () => {
             await activateKeepAwakeAsync();
         }
         enableKeepAwake();
-
-        const disableNavigationBar = async () => {
-            let res = [];
-            try {
-                res[0] = await SystemNavigationBar.navigationHide();
-                res[1] = await SystemNavigationBar.fullScreen();
-                res[2] = await SystemNavigationBar.stickyImmersive();
-
-                res[3] = await NavigationBar.setPositionAsync("absolute");
-                res[4] = await NavigationBar.setHiddenAsync(true);
-                res[5] = await NavigationBar.setVisibilityAsync("hidden");
-            }
-            catch (error) {
-                console.log("possible error: " + res.toString());
-            }
-        }
-        disableNavigationBar();
     }, []);
 
 
     const navigation = useNavigation();
 
     const [clock, setClock] = useState(new Date());
-    const [upcomingBookings, setUpcomingBookings] = useState([]);
-    const [otherBookings, setOtherBookings] = useState([]); // Bookings that are in other rooms
+    let [upcomingBookings, setUpcomingBookings] = useState([]);
+    let [otherBookings, setOtherBookings] = useState([]); // Bookings that are in other rooms
 
     const ongoingImage = require('../assets/ongoingImage.png');
     const nonOngoingImage = require('../assets/nonOngoingImage.png');
     const [active, setActive] = useState(true);
 
-    const [isOngoingBooking, setIsOngoingBooking] = useState(false);
+    let [isOngoingBooking, setIsOngoingBooking] = useState();
     let [nextBooking, setNextBooking] = useState([]);
     const settingsImage = require('../assets/gear-solid.png');
+
     let { roomName, roomCode } = useRoomData();
-
     let { options } = useOptionsData();
-
 
 
     const handleBackButtonPressMainScreen = () => {
@@ -94,8 +79,6 @@ const Home = () => {
     };
 
     useEffect(() => {
-        StatusBar.setBarStyle('dark-content', true);
-        StatusBar.setHidden(true);
         BackHandler.addEventListener('hardwareBackPress', handleBackButtonPressMainScreen);
         return () => {
             BackHandler.removeEventListener('hardwareBackPress', handleBackButtonPressMainScreen);
@@ -105,14 +88,25 @@ const Home = () => {
 
     // Fetch bookings and update clock
     useEffect((roomCode) => {
-        fetchBookings();
-        const interval = setInterval(() => {
-            fetchBookings();
-        }, ((options?.serverSyncTime * 1000) || 2000));
+        const fetchAndSetBookings = async () => {
+            try {
+                await fetchBookings();
+            } catch (error) {
+                console.error("Error fetching bookings:", error,);
+            }
+        };
+
+        // Fetch bookings immediately when the component mounts
+        fetchAndSetBookings();
+
+        // Set up an interval to periodically fetch bookings
+        const interval = setInterval(fetchAndSetBookings, (options?.serverSyncTime * 1000) || 2000);
+
+        // Clean up the interval when the component unmounts or when dependencies change
         return () => {
             clearInterval(interval);
         };
-    }, [roomCode, options?.serverSyncTime]); //TODO: Why the hell does this work? It should not work, but it does lol.
+    }, [roomCode, options?.serverSyncTime]); // Only include options?.serverSyncTime as a dependency
 
     useEffect(
         () => {
@@ -127,21 +121,34 @@ const Home = () => {
 
     const fetchBookings = async () => {
         try {
-            const bookings = await getBookings(); // Reset other bookings
-            const filteredBookings = filterBookings(bookings, roomCode); // Filter the bookings (remove past bookings)
-            setUpcomingBookings(await filteredBookings); // Set fetched bookings to state
-            setOtherBookings(bookings);
-            setIsOngoingBooking(isOngoing(filteredBookings)); // Check ongoing booking
-        } catch (error) {
-            throw new Error("Something went wrong in fetch bookings.\n\n" + error);
+            // Fetch the bookings data
+            const bookings = await getBookings();
+            console.log("Fetched bookings:", bookings.length);
+
+            // Filter the bookings (remove past bookings)
+            const filteredBookings = await filterBookings(bookings, roomCode);
+            console.log("Filtered bookings:", filteredBookings.length);
+
+
+            setUpcomingBookings(filteredBookings);
+            setOtherBookings(getAllBookings(bookings));
+            setIsOngoingBooking(isOngoing(filteredBookings));
+            setNextBooking(upcomingBookings[0]);
+            nextBooking = upcomingBookings[0];
+
+        } catch (e) {
+            console.error("Error in fetch bookings (in Home)");
+            throw new Error("Something went wrong in fetch bookings (in Home).\n\n" + e);
         }
     };
+
 
     const [imageSource, setImageSource] = useState(null);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     useEffect(() => {
         // Fetch and set the initial random image
+        setIsOngoingBooking(isOngoing(upcomingBookings));
         fetchRandomImage();
         const interval = setInterval(() => {
             fetchRandomImage();
@@ -170,6 +177,8 @@ const Home = () => {
 
 
     nextBooking = upcomingBookings[0];
+    isOngoingBooking = isOngoing(upcomingBookings);
+    console.log("Is ongoing booking:", isOngoingBooking);
     return (
         <ImageBackground
             source={{ uri: imageSource }}
@@ -205,7 +214,7 @@ const Home = () => {
                         ))}
                 {active && (
                     <View style={styles.background}>
-                        {upcomingBookings.length > 0 ? (
+                        {(upcomingBookings.length > 0) ? (
                             <View style={styles.parent}>
                                 {/* Clock section */}
                                 <View style={styles.wrapperLeft}>
@@ -219,48 +228,59 @@ const Home = () => {
                                         marginBottom: 10,
                                     }} />
                                     <ScrollView style={styles.upcomingSection}>
+                                        {upcomingBookings.slice(1).map((booking, index) => {
+                                            // Get the current booking's date
+                                            const currentBookingDate = getBookingDay(booking);
 
-                                        {upcomingBookings.slice(1).map((booking) => (
-                                            <View style={styles.cardwrapper} key={booking.Aktivitetsnr._}>
-                                                <Text style={styles.text}>{booking.Startdatum._}</Text>
-                                                <Card mode={'contained'} style={styles.card}>
-                                                    <Card.Content>
-                                                        <Text style={styles.title}>{booking.Rubrik._}</Text>
-                                                        <Text style={styles.time}>{booking.Starttid._ + " - " + booking.Sluttid._}</Text>
-                                                    </Card.Content>
-                                                </Card>
-                                                <Divider style={{
-                                                    backgroundColor: 'white',
-                                                    height: 0,
-                                                    width: '100%',
-                                                    margin: 0,
-                                                    marginBottom: 10,
-                                                }} />
-                                            </View>))
-                                        }
+                                            // Check if it differs from the previous booking's date
+                                            const shouldRenderDate =
+                                                index === 0 || currentBookingDate !== getBookingDay(upcomingBookings[index]);
+
+                                            return (
+                                                <View style={styles.cardwrapper} key={booking.Aktivitetsnr._}>
+                                                    {shouldRenderDate && <Text style={styles.text}>{currentBookingDate}</Text>}
+                                                    <Card mode={'contained'} style={styles.card}>
+                                                        <Card.Content>
+                                                            <Text style={styles.title}>{booking.Rubrik?._}</Text>
+                                                            <Text style={styles.time}>
+                                                                {booking.Starttid?._ + " – " + booking.Sluttid?._}
+                                                            </Text>
+                                                        </Card.Content>
+                                                    </Card>
+                                                    <Divider
+                                                        style={{
+                                                            backgroundColor: 'white',
+                                                            height: 0,
+                                                            width: '100%',
+                                                            margin: 0,
+                                                            marginBottom: 10,
+                                                        }}
+                                                    />
+                                                </View>
+                                            );
+                                        })}
                                     </ScrollView>
                                 </View>
 
+                                <View style={styles.roomDetails}>
+                                    <AutoSizeText
+                                        numberOfLines={1}
+                                        fontSizePresets={[100, 90, 80, 70, 60, 50, 40, 30, 20, 10]}
+                                        mode={ResizeTextMode.preset_font_sizes}
+                                        style={styles.roomName}>{roomName}</AutoSizeText>
+
+                                </View>
                                 {/* Next Booking section */}
                                 <View style={styles.wrapperRight}>
-                                    <View style={styles.roomDetails}>
-                                        <Text style={styles.roomName}>{roomName}</Text>
-                                        <View style={styles.statusContainer}>
-                                            <Image
-                                                source={isOngoingBooking ? ongoingImage : nonOngoingImage}
-                                                style={styles.statusImage}
-                                            />
-                                            <Text style={styles.statusText}>{isOngoingBooking ? 'Upptaget' : 'Ledigt'}</Text>
-                                        </View>
-                                    </View>
-
                                     <View style={styles.nextBookingSection}>
                                         <Card style={styles.bigcard} key={nextBooking.Aktivitetsnr._}>
-                                            <Card.Content>
-                                                <Text style={styles.blacktitle}>{nextBooking.Rubrik._}</Text>
-                                                <Text style={styles.text}>{nextBooking.Startdatum._}</Text>
-                                                <Text style={styles.text}>{nextBooking.Starttid._ + " - " + nextBooking.Sluttid._}</Text>
-                                                <Text style={styles.text}>{nextBooking.Kommentar._}</Text>
+                                            {(isOngoingBooking) && <Card.Cover style={styles.bigcardred}></Card.Cover>}
+                                            {(!isOngoingBooking) && <Card.Cover style={styles.bigcardgreen}></Card.Cover>}
+                                            <Card.Content >
+                                                <Text style={styles.bigcardtitle}>{nextBooking.Rubrik._}</Text>
+                                                <Text style={styles.bigcardtext}>{getBookingDay(nextBooking)}</Text>
+                                                <Text style={styles.bigcardtimetext}>{nextBooking.Starttid?._ + " – " + nextBooking.Sluttid._}</Text>
+                                                <Text style={styles.bigcardcommenttext}>{nextBooking.Kommentar?._}</Text>
                                             </Card.Content>
                                         </Card>
                                     </View>

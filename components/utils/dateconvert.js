@@ -6,18 +6,23 @@ const dateConvert = (tid, datum) => {
 
     // The booking time format is HH.MM
     let bookingStartTime = tid;
-    let bookingStartDate = datum;
+    let bookingDate = datum;
 
+
+    // If no point is present in the time, add one
+    if (!bookingStartTime.includes('.')) {
+        bookingStartTime = bookingStartTime.slice(0, 2) + '.' + bookingStartTime.slice(2);
+    }
 
 
     // Substring the time to get the hours and minutes
-    let [bookingStartHours, bookingStartMinutes] = bookingStartTime.split('.');
+    let [bookingHours, bookingMinutes] = bookingStartTime.split('.');
 
     // Pad hours and minutes with leading zeros if necessary
-    bookingStartHours = bookingStartHours.padStart(2, '0');
-    bookingStartMinutes = bookingStartMinutes.padStart(2, '0');
+    bookingHours = bookingHours.padStart(2, '0');
+    bookingMinutes = bookingMinutes.padStart(2, '0');
 
-    const convertedDate = new Date(`${bookingStartDate}T${bookingStartHours}:${bookingStartMinutes}:00`);
+    const convertedDate = new Date(`${bookingDate}T${bookingHours}:${bookingMinutes}:00`);
 
     return convertedDate;
 };

@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { Card, Chip, Divider } from 'react-native-paper';
 import styles from '../styles/Main.module.js';
+import { getBookingDay } from './utils/getbookings.js';
+import { AutoSizeText, ResizeTextMode } from 'react-native-auto-size-text';
 
 const AllBookings = ({ otherBookings, time }) => {
     return (
@@ -15,19 +17,23 @@ const AllBookings = ({ otherBookings, time }) => {
             {/* Upcoming bookings list */}
             <View style={styles.gridContainer}>
                 {/* Here, we use FlatList to render a grid of cards */}
-                <Text style={styles.titleother}>Andra bokningar:</Text>
+                <Text style={styles.titleother}>Bokningar i andra rum:</Text>
                 <FlatList
                     data={otherBookings}
-                    keyExtractor={(item) => item.Aktivitetsnr._}
-                    numColumns={2} // Change this to the desired number of columns in the grid
-                    renderItem={({ item }) => (
-                        <Card mode={'contained'} style={styles.gridCard} key={item.Aktivitetsnr._}>
-                            <Card.Content>
-                                <Text style={styles.title}>{item.Rubrik._}</Text>
+                    keyExtractor={(booking) => booking.Aktivitetsnr._}
+                    numColumns={3} // Change this to the desired number of columns in the grid
+                    renderItem={({ item: booking }) => (
+                        <Card mode={'contained'} style={styles.gridCard} key={booking.Aktivitetsnr._}>
+                            <Card.Content style={styles.content}>
+                                <AutoSizeText style={styles.title}
+                                    numberOfLines={1}
+                                    minFontSize={21}
+                                    mode={ResizeTextMode.min_font_size}>
+                                    {booking.Rubrik._}</AutoSizeText>
                                 <Divider />
-                                <Text style={styles.smalltext}>{item.Startdatum._}</Text>
-                                <Text style={styles.smalltext}>{item.Starttid._ + " - " + item.Sluttid._}</Text>
-                                <Chip mode={'outlined'} style={styles.chip}>{item.Rumsnamn._}</Chip >
+                                <Text style={styles.smalltext}>{getBookingDay(booking)}</Text>
+                                <Text style={styles.smalltext}>{booking.Starttid._ + " – " + booking.Sluttid._}</Text>
+                                <Chip mode={'flat'} style={styles.chip}>{booking.Rumsnamn._}</Chip >
                             </Card.Content>
                         </Card>
                     )}

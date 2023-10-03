@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from './pages/home.js';
+import Home from './pages/Home.js';
 import Settings from './pages/settings.js';
 import { RoomDataProvider } from './components/utils/roomDataProvider.js';
 import { OptionsDataProvider } from './components/utils/optionsDataProvider.js';
+
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,8 @@ const Stack = createStackNavigator();
 
 
 const App = () => {
+
+
 
 
 

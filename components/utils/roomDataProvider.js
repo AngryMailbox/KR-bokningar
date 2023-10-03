@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useMemo, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 
 // Create a new context
@@ -7,6 +7,8 @@ const RoomDataContext = createContext();
 export function RoomDataProvider({ children }) {
     const [roomName, setRoomName] = useState('');
     const [roomCode, setRoomCode] = useState('');
+
+
 
     useEffect(() => {
         loadRoomData(); // Load room data from SecureStore when the component mounts
@@ -40,17 +42,25 @@ export function RoomDataProvider({ children }) {
         }
     };
 
+    const contextValue = useMemo(() => {
+        return { roomName, setRoomName, roomCode, setRoomCode, saveRoomData };
+    }, [roomName, setRoomName, roomCode, setRoomCode, saveRoomData]);
+
     // Expose the state variables and saveRoomData function through the context provider
     return (
-        <RoomDataContext.Provider value={{ roomName, setRoomName, roomCode, setRoomCode, saveRoomData }}>
+        <RoomDataContext.Provider value={contextValue}>
             {children}
         </RoomDataContext.Provider>
     );
 }
 
 // Custom hook to use the room data context
-export function useRoomData() {
-    return useContext(RoomDataContext);
+export const useRoomData = () => {
+    const context = useContext(RoomDataContext);
+    if (!context) {
+        throw new Error('useRoomData must be used within an RoomDataProvider');
+    }
+    return context;
 }
 
 export default RoomDataContext; // Don't forget to export the RoomDataContext itself
