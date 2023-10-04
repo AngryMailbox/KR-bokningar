@@ -40,6 +40,7 @@ const Home = () => {
 
     let { roomName, roomCode } = useRoomData();
     let { options } = useOptionsData();
+    let [bookingIsClose, setBookingIsClose] = useState(false);
 
 
     const handleBackButtonPressMainScreen = () => {
@@ -173,9 +174,27 @@ const Home = () => {
         setIsImageLoaded(false);
     };
 
+    const isBookingClose = (booking) => {
+        const currentTime = new Date();
+        const startTime = new Date(dateConvert(booking.Starttid._, booking.Startdatum._));
 
+        if (startTime - currentTime < 15 * 60 * 1000) {
+            console.log("Booking is close");
+            console.log("Time left: " + (startTime - currentTime) / 1000 + " seconds");
+            return true;
+        }
+        return false;
+    };
+
+
+    bookingIsClose = isBookingClose(nextBooking);
     nextBooking = upcomingBookings[0];
     isOngoingBooking = isOngoing(upcomingBookings);
+
+
+
+
+
     return (
         <ImageBackground
             source={{ uri: imageSource }}
@@ -189,7 +208,7 @@ const Home = () => {
                 timeForInactivity={options?.screenTimeout * 1000 || 30000}
                 onAction={isActive => { setActive(isActive); }}
             >
-                {(!active && !isOngoingBooking) && (
+                {(!active && !isOngoingBooking && !bookingIsClose) && (
                     options.link ? (
                         <WebView source={{ uri: options.link }} style={{
                             position: 'absolute',
@@ -210,7 +229,7 @@ const Home = () => {
                                 justifyContent: 'center',
                             }}></View>
                         ))}
-                {(active || isOngoingBooking) && (
+                {(active || isOngoingBooking || bookingIsClose) && (
                     <View style={styles.background}>
                         {(upcomingBookings.length > 0) ? (
                             <View style={styles.parent}>
