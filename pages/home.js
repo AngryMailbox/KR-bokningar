@@ -175,22 +175,28 @@ const Home = () => {
     };
 
     const isBookingClose = (booking) => {
-        const currentTime = new Date();
-        const startTime = new Date(dateConvert(booking.Starttid._, booking.Startdatum._));
+        try {
+            console.log("Checking if booking is close");
+            const currentTime = new Date();
+            const startTime = new Date(dateConvert(booking.Starttid._, booking.Startdatum._));
 
-        if (startTime - currentTime < 15 * 60 * 1000) {
-            console.log("Booking is close");
-            console.log("Time left: " + (startTime - currentTime) / 1000 + " seconds");
-            return true;
+            if (startTime - currentTime < 15 * 60 * 1000) {
+                console.log("Booking is close");
+                console.log("Time left: " + (startTime - currentTime) / 1000 + " seconds");
+                return true;
+            }
+            return false;
+        } catch (e) {
+
+            return false;
         }
-        return false;
     };
 
 
-    bookingIsClose = isBookingClose(nextBooking);
+
     nextBooking = upcomingBookings[0];
     isOngoingBooking = isOngoing(upcomingBookings);
-
+    bookingIsClose = isBookingClose(nextBooking);
 
 
 
