@@ -13,11 +13,7 @@ import { useRoomData } from '../components/utils/roomDataProvider.js';
 import { useKeepAwake, activateKeepAwakeAsync } from 'expo-keep-awake';
 import UserInactivity from 'react-native-user-inactivity';
 import { WebView } from 'react-native-webview';
-import * as NavigationBar from 'expo-navigation-bar';
-import SystemNavigationBar from 'react-native-system-navigation-bar';
-import BigCard from '../components/BigCard.js';
 import { AutoSizeText, ResizeTextMode } from 'react-native-auto-size-text';
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 
 
@@ -29,15 +25,6 @@ import dateConvert from '../components/utils/dateconvert.js';
 const Home = () => {
     const [keepAwake, setKeepAwake] = useState(); // State for the keep awake button
     const [barVisibility, setBarVisibility] = useState();
-
-
-
-    useEffect(() => {
-        const enableKeepAwake = async () => {
-            await activateKeepAwakeAsync();
-        }
-        enableKeepAwake();
-    }, []);
 
 
     const navigation = useNavigation();
@@ -77,12 +64,15 @@ const Home = () => {
         return true; // Return true to indicate that the back button has been handled
     };
 
+
+
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', handleBackButtonPressMainScreen);
         return () => {
             BackHandler.removeEventListener('hardwareBackPress', handleBackButtonPressMainScreen);
         };
     }, []);
+
 
 
     // Fetch bookings and update clock
@@ -163,7 +153,6 @@ const Home = () => {
         fetchRandomImage();
         const interval = setInterval(() => {
             fetchRandomImage();
-            console.log("Fetching new image");
         }, ((options?.slideShowTime) * 1000 || 30000));
         return () => clearInterval(interval);
     }, [options?.slideShowTime]);
@@ -194,6 +183,7 @@ const Home = () => {
             onLoad={onImageLoad}
             onError={onImageError}
         >
+
             <UserInactivity
                 isActive={active}
                 timeForInactivity={options?.screenTimeout * 1000 || 30000}

@@ -14,7 +14,6 @@ const get = (url) => {
         req.onload = function (event) {
             var resp = req.response;
             if (resp) {
-                console.log("Got response");
                 accept(resp);
             }
         };
