@@ -189,7 +189,7 @@ const Home = () => {
                 timeForInactivity={options?.screenTimeout * 1000 || 30000}
                 onAction={isActive => { setActive(isActive); }}
             >
-                {!active && (
+                {(!active && !isOngoingBooking) && (
                     options.link ? (
                         <WebView source={{ uri: options.link }} style={{
                             position: 'absolute',
@@ -210,7 +210,7 @@ const Home = () => {
                                 justifyContent: 'center',
                             }}></View>
                         ))}
-                {active && (
+                {(active || isOngoingBooking) && (
                     <View style={styles.background}>
                         {(upcomingBookings.length > 0) ? (
                             <View style={styles.parent}>
