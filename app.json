@@ -12,12 +12,12 @@
       "backgroundColor": "#1c1c1c"
     },
     "androidNavigationBar": {
-      "visible": "sticky-immersive"
+      "visible": "immersive"
     },
     "androidStatusBar": {
       "barStyle": "dark-content",
       "backgroundColor": "#1c1c1c",
-      "hidden": true
+      "hidden": true,
     },
     "assetBundlePatterns": [
       "**/*"
